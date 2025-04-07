@@ -119,12 +119,12 @@ public class GymApp {
         System.out.println("Password: " + password);
         System.out.println("Role: " + role);
 
-        // User user = new User(1, username, password, role);
-        // try {
-        // userService.addUser(user);
-        // System.out.println("User added successfully!");
-        // } catch (SQLException e) {
-        // System.out.println("Error adding user: " + e.getMessage());
-        // }
+        User user = new User(1, username, password, role);
+        try {
+            userService.addUser(user);
+            System.out.println("User added successfully!");
+        } catch (SQLException e) {
+            System.out.println("Error adding user: " + e.getMessage());
+        }
     }
 }
