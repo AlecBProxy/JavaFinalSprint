@@ -25,6 +25,11 @@ public Membership(String memberName, String membershipId, double membershipCost,
     this.status = status;
 }
 
+// No Argument Constructor //
+public Membership(){
+
+}
+
 // Getters //
 public String getMemberName() {
     return memberName;
@@ -68,7 +73,7 @@ public void setStartDate(String startDate) {
     this.startDate = startDate;
 }
 
-public void setStartDate(int duration) {
+public void setDuration(int duration) {
     this.duration = duration;
 }
 
