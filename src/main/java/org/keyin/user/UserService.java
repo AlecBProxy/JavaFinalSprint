@@ -31,4 +31,20 @@ public class UserService {
     public User getUserByUsername(String username) throws SQLException {
         return userDao.getUserByUsername(username);
     }
+
+    public void loadDefaultUsers() {
+        try {
+            User adminUser = new User(1, "admin", "adminpass", "admin@site.com", "123-4567", "Admin HQ", "admin");
+            User memberUser = new User(2, "member", "memberpass", "member@site.com", "987-6543", "Member Lane", "member");
+            User trainerUser = new User(3, "trainer", "trainerpass", "trainer@site.com", "555-9999", "Trainer Gym", "trainer");
+    
+            addUser(adminUser);
+            addUser(memberUser);
+            addUser(trainerUser);
+    
+        } catch (SQLException e) {
+            System.out.println("Error loading default users: " + e.getMessage());
+        }
+    }
+    
 }
