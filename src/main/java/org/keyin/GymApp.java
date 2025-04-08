@@ -6,7 +6,6 @@ import java.util.Scanner;
 import org.keyin.memberships.MembershipService;
 import org.keyin.user.User;
 import org.keyin.user.UserService;
-import org.keyin.workoutclasses.WorkoutClass;
 import org.keyin.workoutclasses.WorkoutClassService;
 
 public class GymApp {
@@ -20,13 +19,22 @@ public class GymApp {
         Scanner scanner = new Scanner(System.in);
         int choice;
 
+        // Placeholder for user object
+        User user = new User();
+        user.setUserId(1);
+        user.setUsername("testUser");
+        user.setPassword("testPassword");
+        user.setRole("member");
+
         do {
             System.out.println("\n=== Gym Management System ===");
             System.out.println("1. Add a new user");
             System.out.println("2. Login as a user");
             System.out.println("3. Exit");
-            System.out.println("4. Add workout class");
-            System.out.print("Enter your choice: ");
+            System.out.println("4. temp: view member menu");
+            System.out.println("5. temp: view trainer menu");
+            System.out.println("6. temp: view admin menu");
+            System.out.print("\nEnter your choice: ");
 
             // Validate input
             while (!scanner.hasNextInt()) {
@@ -38,21 +46,21 @@ public class GymApp {
             scanner.nextLine(); // Consume newline
 
             switch (choice) {
-                case 1:
-                    addNewUser(scanner, userService);
-                    break;
-                case 2:
+                case 1 -> addNewUser(scanner, userService);
+                case 2 -> {
                     // logInAsUser(scanner, userService, membershipService, workoutService);
-                    break;
-                case 3:
-                    System.out.println("Exiting the program...");
-                    break;
-                case 4:
-                    addWorkoutClass(scanner, workoutService);
-                    break;
-                
-                default:
-                    System.out.println("Invalid choice! Please select a valid option.");
+                }
+                case 3 -> System.out.println("Exiting the program...");
+                case 4 -> {
+                    showMemberMenu(scanner, user, userService, membershipService);
+                }
+                case 5 -> {
+                    showTrainerMenu(scanner, user, userService, workoutService);
+                }
+                case 6 -> {
+                    showAdminMenu(scanner, user, userService, membershipService, workoutService);
+                }
+                default -> System.out.println("Invalid choice! Please select a valid option.");
             }
         } while (choice != 3);
 
@@ -93,45 +101,132 @@ public class GymApp {
         // }
     }
 
-    private static void addWorkoutClass(Scanner scanner, WorkoutClassService workoutService) {
-    System.out.print("Enter workout class type: ");
-    String type = scanner.nextLine();
-
-    System.out.print("Enter workout class description: ");
-    String description = scanner.nextLine();
-
-    System.out.print("Enter trainer ID (number): ");
-    int trainerId = scanner.nextInt();
-    scanner.nextLine(); // consume newline
-
-    WorkoutClass workout = new WorkoutClass(0, type, description, trainerId);
-
-    try {
-        workoutService.addWorkoutClass(workout);
-        System.out.println(" New workout class added!");
-        System.out.println(" " + type + " - " + description);
-    } catch (Exception e) {
-        System.out.println(" Error adding workout class: " + e.getMessage());
-    }
-}
-
-
     // Placeholder for Member menu
     private static void showMemberMenu(Scanner scanner, User user, UserService userService,
             MembershipService membershipService) {
-        System.out.println("Member menu under construction.");
+        System.out.println("\n\nWelcome " + user.getUsername() + "!");
+
+        do {
+            System.out.println("\n=== Member Menu ===");
+            System.out.println("1. View workout classes");
+            System.out.println("2. Purchase membership");
+            System.out.println("3. View total membership expenses");
+            System.out.println("4. Exit");
+
+            System.out.print("\nEnter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            System.out.println("");
+            switch (choice) {
+                case 1 -> {
+                    // View workout classes
+                    System.out.println("Workout classes under construction.");
+                }
+                case 2 -> {
+                    // Purchase membership
+                    System.out.println("Membership purchase under construction.");
+                }
+                case 3 -> {
+                    // View total membership expenses
+                    System.out.println("Total membership expenses under construction.");
+                }
+                case 4 -> {
+                    System.out.println("Exiting the member menu...");
+                    return; // Exit the loop and return to the main menu
+                }
+                default -> System.out.println("Invalid choice! Please select a valid option.");
+            }
+        } while (true); // Keep showing the menu until the user chooses to exit
     }
 
     // Placeholder for Trainer menu
     private static void showTrainerMenu(Scanner scanner, User user, UserService userService,
             WorkoutClassService workoutService) {
-        System.out.println("Trainer menu under construction.");
+        System.out.println("\n\nWelcome " + user.getUsername() + "!");
+
+        // create update and delete workout classes
+        // View a list of all their assigned classes
+        // Purchase a gym membership for themselves
+
+        do {
+            System.out.println("\n=== Trainer Menu ===");
+            System.out.println("1. View assigned workout classes");
+            System.out.println("2. Create a new workout class");
+            System.out.println("3. Update an existing workout class");
+            System.out.println("4. Delete a workout class");
+            System.out.println("5. Purchase a gym membership");
+            System.out.println("6. Exit");
+
+            System.out.print("\nEnter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            System.out.println("");
+            switch (choice) {
+                case 1 -> {
+                    // View assigned workout classes
+                    System.out.println("Assigned workout classes under construction.");
+                }
+                case 2 -> {
+                    // Create a new workout class
+                    System.out.println("Create a new workout class under construction.");
+                }
+                case 3 -> {
+                    // Update an existing workout class
+                    System.out.println("Update an existing workout class under construction.");
+                }
+                case 4 -> {
+                    // Delete a workout class
+                    System.out.println("Delete a workout class under construction.");
+                }
+                case 5 -> {
+                    // Purchase a gym membership
+                    System.out.println("Purchase a gym membership under construction.");
+                }
+                case 6 -> {
+                    System.out.println("Exiting the trainer menu...");
+                    return; // Exit the loop and return to the main menu
+                }
+                default -> System.out.println("Invalid choice! Please select a valid option.");
+            }
+        } while (true); // Keep showing the menu until the user chooses to exit
+
     }
 
     // Admin menu with minimal implementation
     private static void showAdminMenu(Scanner scanner, User user, UserService userService,
             MembershipService membershipService, WorkoutClassService workoutService) {
-        System.out.println("Admin menu under construction.");
+        System.out.println("\n\nWelcome " + user.getUsername() + "!");
+
+        do {
+            System.out.println("\n=== Admin Menu ===");
+            System.out.println("1. View all users");
+            System.out.println("2. Delete a user");
+            System.out.println("3. View all memberships and total expenses");
+            System.out.println("4. Exit");
+            System.out.print("\nEnter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            System.out.println("");
+            switch (choice) {
+                case 1 -> {
+                    // View all users
+                    System.out.println("View all users under construction.");
+                }
+                case 2 -> {
+                    // Delete a user
+                    System.out.println("Delete a user under construction.");
+                }
+                case 3 -> {
+                    // View all memberships and total expenses
+                    System.out.println("View all memberships and total expenses under construction.");
+                }
+                case 4 -> {
+                    System.out.println("Exiting the admin menu...");
+                    return; // Exit the loop and return to the main menu
+                }
+                default -> System.out.println("Invalid choice! Please select a valid option.");
+            }
+        } while (true); // Keep showing the menu until the user chooses to exit
     }
 
     // Minimal implementation of adding a new user
