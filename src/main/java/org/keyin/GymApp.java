@@ -6,6 +6,7 @@ import java.util.Scanner;
 import org.keyin.memberships.MembershipService;
 import org.keyin.user.User;
 import org.keyin.user.UserService;
+import org.keyin.workoutclasses.WorkoutClass;
 import org.keyin.workoutclasses.WorkoutClassService;
 
 public class GymApp {
@@ -24,6 +25,7 @@ public class GymApp {
             System.out.println("1. Add a new user");
             System.out.println("2. Login as a user");
             System.out.println("3. Exit");
+            System.out.println("4. Add workout class");
             System.out.print("Enter your choice: ");
 
             // Validate input
@@ -45,6 +47,10 @@ public class GymApp {
                 case 3:
                     System.out.println("Exiting the program...");
                     break;
+                case 4:
+                    addWorkoutClass(scanner, workoutService);
+                    break;
+                
                 default:
                     System.out.println("Invalid choice! Please select a valid option.");
             }
@@ -86,6 +92,29 @@ public class GymApp {
         // e.printStackTrace();
         // }
     }
+
+    private static void addWorkoutClass(Scanner scanner, WorkoutClassService workoutService) {
+    System.out.print("Enter workout class type: ");
+    String type = scanner.nextLine();
+
+    System.out.print("Enter workout class description: ");
+    String description = scanner.nextLine();
+
+    System.out.print("Enter trainer ID (number): ");
+    int trainerId = scanner.nextInt();
+    scanner.nextLine(); // consume newline
+
+    WorkoutClass workout = new WorkoutClass(0, type, description, trainerId);
+
+    try {
+        workoutService.addWorkoutClass(workout);
+        System.out.println(" New workout class added!");
+        System.out.println(" " + type + " - " + description);
+    } catch (Exception e) {
+        System.out.println(" Error adding workout class: " + e.getMessage());
+    }
+}
+
 
     // Placeholder for Member menu
     private static void showMemberMenu(Scanner scanner, User user, UserService userService,
