@@ -6,10 +6,18 @@ public class WorkoutClass {
     private String workoutClassDescription;
     private int trainerId;
 
-    // Default Constructor
-    public WorkoutClass() {}
+    // Default constructor
+    public WorkoutClass() {
+    }
 
-    // Default Constructor
+    // Constructor without workoutClassId
+    public WorkoutClass(String workoutClassType, String workoutClassDescription, int trainerId) {
+        this.workoutClassType = workoutClassType;
+        this.workoutClassDescription = workoutClassDescription;
+        this.trainerId = trainerId;
+    }
+
+    // Full constructor with all fields
     public WorkoutClass(int workoutClassId, String workoutClassType, String workoutClassDescription, int trainerId) {
         this.workoutClassId = workoutClassId;
         this.workoutClassType = workoutClassType;
