@@ -1,11 +1,12 @@
 package org.keyin.memberships;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
-
-import java.sql.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.PreparedStatement;
 
 public class MembershipDAO {
 
@@ -14,10 +15,10 @@ public class MembershipDAO {
     private static final String DB_PASS  = "";
 
     // SQL Statements //
-    private static final String INSERT_MEMBBERSHIP_SQL = "INSERT INTO membership (membership_id, member_name, membership_cost, start_date, duration, member_type, status) " +
+    private static final String INSERT_MEMBERSHIP_SQL = "INSERT INTO membership (membership_id, member_name, membership_cost, start_date, duration, member_type, status) " +
         "VALUES (?, ?, ?, ?, ?, ?, ?)";
   
-        private static final String SELECT_MEMBERSHIP_BY_ID_SQL =
+    private static final String SELECT_MEMBERSHIP_BY_ID_SQL =
         "SELECT membership_id, member_name, membership_cost, start_date, duration, member_type, status " +
         "FROM membership WHERE membership_id = ?";
 
@@ -49,6 +50,34 @@ public class MembershipDAO {
         
     }
 
+    }
+
+    // Method to retrieve a membership by ID //
+
+    public Membership getMembershipById(String membershipId) {
+        Membership membership = null; 
+
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+        PreparedStatement statement = connection.prepareStatement(SELECT_MEMBERSHIP_BY_ID_SQL)) {
+            statement.setString(1, membershipId);
+            ResultSet result = statement.executeQuery();
+
+            if (result.next()) {
+                membership = new Membership();
+                membership.setMembershipId(result.getString("membership_id"));
+                membership.setMemberName(result.getString("member_name"));
+                membership.setMembershipCost(result.getDouble("membership_cost"));
+                membership.setStartDate(result.getString("start_date"));
+                membership.setDuration(result.getInt("duration"));
+                membership.setMemberType(result.getString("member_type"));
+                membership.setStatus(result.getString("status"));
+            }
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        
+        return membership;
     }
 
     // Method to retrieve all membership records //

@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MembershipService {
 
-    private MembershipDAO membershipDAO;
+    private final MembershipDAO membershipDAO;
 
     // Default constructor to internally creata a DAO //
     public MembershipService() {
