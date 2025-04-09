@@ -1,17 +1,17 @@
 package org.keyin.memberships;
 
-
+import java.sql.DriverManager;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.sql.PreparedStatement;
 
 public class MembershipDAO {
 
     private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/";
     private static final String DB_USER  = "postgres";
     private static final String DB_PASS  = "";
-
 
     // SQL Statements //
     private static final String INSERT_MEMBBERSHIP_SQL = "INSERT INTO membership (membership_id, member_name, membership_cost, start_date, duration, member_type, status) " +
@@ -33,7 +33,7 @@ public class MembershipDAO {
 
 
     // Method to create a new membership //
-    public void createMembership(){
+    public void createMembership(Membership membership) {
         try (Connection connection = DriverManager.getConnection(JDBC_URL,DB_USER, DB_PASS);
          PreparedStatement statement = connection.prepareStatement(INSERT_MEMBERSHIP_SQL)) {
             statement.setString(1, membership.getMembershipId());
