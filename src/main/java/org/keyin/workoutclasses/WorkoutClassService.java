@@ -22,8 +22,17 @@ public class WorkoutClassService {
         return workoutClassDAO.getAllWorkoutClasses();
     }
 
-    // Method to delete a workout class by ID
-    public void deleteWorkoutClass(int classId) throws SQLException {
-        workoutClassDAO.deleteWorkoutClass(classId);
+    public boolean updateWorkoutClass(WorkoutClass workoutClass) throws SQLException {
+        return workoutClassDAO.updateWorkoutClass(workoutClass);
     }
+
+    public List<WorkoutClass> getWorkoutClassesByTrainerId(int trainerId) throws SQLException {
+        return workoutClassDAO.getWorkoutClassesByTrainerId(trainerId);
+    }
+
+    // Method to delete a workout class by ID
+    public boolean deleteWorkoutClass(int classId) throws SQLException {
+        return workoutClassDAO.deleteWorkoutClass(classId);
+    }
+    
 }
