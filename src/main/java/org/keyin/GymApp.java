@@ -1,11 +1,13 @@
 package org.keyin;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Scanner;
 
 import org.keyin.memberships.MembershipService;
 import org.keyin.user.User;
 import org.keyin.user.UserService;
+import org.keyin.workoutclasses.WorkoutClass;
 import org.keyin.workoutclasses.WorkoutClassService;
 
 public class GymApp {
@@ -166,33 +168,118 @@ public class GymApp {
             scanner.nextLine(); // Consume newline
             System.out.println("");
             switch (choice) {
+                
+
+
                 case 1 -> {
-                    // View assigned workout classes
-                    System.out.println("Assigned workout classes under construction.");
+                    try {
+                        List<WorkoutClass> classes = workoutService.getWorkoutClassesByTrainerId(user.getUserId());
+                
+                        if (classes.isEmpty()) {
+                            System.out.println(" No classes assigned to you.");
+                        } else {
+                            System.out.println("\n Your Assigned Workout Classes:");
+                            System.out.printf("%-20s | %s%n", "Workout Type", "Description");
+                            System.out.println("--------------------------------------------------");
+                
+                            for (WorkoutClass wc : classes) {
+                                System.out.printf("%-20s | %s%n", wc.getWorkoutClassType(), wc.getWorkoutClassDescription());
+                            }
+                        }
+                    } catch (SQLException e) {
+                        System.out.println(" Error: " + e.getMessage());
+                    }
                 }
+                
+
                 case 2 -> {
-                    // Create a new workout class
-                    System.out.println("Create a new workout class under construction.");
+                    System.out.print("Enter workout type: ");
+                    String type = scanner.nextLine();
+                    System.out.print("Enter workout description: ");
+                    String desc = scanner.nextLine();
+                    System.out.print("Enter your trainer ID: ");
+                    int trainerId = Integer.parseInt(scanner.nextLine());
+                
+                    WorkoutClass wc = new WorkoutClass(0, type, desc, trainerId);
+                
+                    try {
+                        workoutService.addWorkoutClass(wc);
+                        System.out.println(" Workout class added!");
+                    } catch (SQLException e) {
+                        System.out.println(" Error: " + e.getMessage());
+                    }
                 }
+                    
+
                 case 3 -> {
-                    // Update an existing workout class
-                    System.out.println("Update an existing workout class under construction.");
+                    int updateId;
+                    while (true) {
+                        System.out.print("Enter workout class ID to update: ");
+                        try {
+                            updateId = Integer.parseInt(scanner.nextLine());
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println(" Invalid input. Please enter a number.");
+                        }
+                    }
+                
+                    System.out.print("Enter new workout type: ");
+                    String newType = scanner.nextLine();
+                
+                    System.out.print("Enter new workout description: ");
+                    String newDesc = scanner.nextLine();
+                
+                    WorkoutClass updatedWorkout = new WorkoutClass(updateId, newType, newDesc, user.getUserId());
+                
+                    try {
+                        boolean updated = workoutService.updateWorkoutClass(updatedWorkout);
+                        if (updated) {
+                            System.out.println(" Workout class updated successfully!");
+                        } else {
+                            System.out.println(" No workout class found with ID: " + updateId);
+                        }
+                    } catch (SQLException e) {
+                        System.out.println(" Error updating workout class: " + e.getMessage());
+                    }
                 }
+
+
                 case 4 -> {
-                    // Delete a workout class
-                    System.out.println("Delete a workout class under construction.");
+                    int id;
+                    while (true) {
+                        System.out.print("Enter workout class ID to delete: ");
+                        try {
+                            id = Integer.parseInt(scanner.nextLine());
+                            break;
+                        } catch (NumberFormatException e) {
+                            System.out.println(" Invalid input. Please enter a number.");
+                        }
+                    }
+                
+                    try {
+                        boolean deleted = workoutService.deleteWorkoutClass(id);
+                        if (deleted) {
+                            System.out.println(" Workout class deleted!");
+                        } else {
+                            System.out.println(" No workout class found with ID: " + id);
+                        }
+                    } catch (SQLException e) {
+                        System.out.println(" Error: " + e.getMessage());
+                    }
                 }
-                case 5 -> {
-                    // Purchase a gym membership
-                    System.out.println("Purchase a gym membership under construction.");
-                }
+
+ 
+                // case 5 -> {
+                //     System.out.print("Enter membership type: ");
+
+
                 case 6 -> {
                     System.out.println("Exiting the trainer menu...");
-                    return; // Exit the loop and return to the main menu
+                    return; 
                 }
                 default -> System.out.println("Invalid choice! Please select a valid option.");
             }
-        } while (true); // Keep showing the menu until the user chooses to exit
+        } while (true); 
 
     }
 
