@@ -257,7 +257,7 @@ public class GymApp {
                         if (deleted) {
                             System.out.println(" Workout class deleted!");
                         } else {
-                            System.out.println("⚠️ No workout class found with ID: " + id);
+                            System.out.println(" No workout class found with ID: " + id);
                         }
                     } catch (SQLException e) {
                         System.out.println(" Error: " + e.getMessage());
