@@ -5,16 +5,30 @@ CREATE TABLE users (
                        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE cars (
-                      car_id SERIAL PRIMARY KEY,
-                      make VARCHAR(50) NOT NULL,
-                      model VARCHAR(50) NOT NULL,
-                      year INT NOT NULL,
-                      price DECIMAL(10, 2) NOT NULL,
-                      seller_id INT NOT NULL,
-                      FOREIGN KEY (seller_id) REFERENCES users(user_id) ON DELETE CASCADE
-);
+-- CREATE TABLE cars (
+--                       car_id SERIAL PRIMARY KEY,
+--                       make VARCHAR(50) NOT NULL,
+--                       model VARCHAR(50) NOT NULL,
+--                       year INT NOT NULL,
+--                       price DECIMAL(10, 2) NOT NULL,
+--                       seller_id INT NOT NULL,
+--                       FOREIGN KEY (seller_id) REFERENCES users(user_id) ON DELETE CASCADE
+-- );
 
+-- Create the Workout Class table
+-- CREATE TABLE IF NOT EXISTS public.workout_class
+-- (
+--     workout_class_id SERIAL PRIMARY KEY,
+--     workout_class_type VARCHAR(50) NOT NULL,
+--     workout_class_description VARCHAR(250),
+--     trainer_id INTEGER NOT NULL,
+--     CONSTRAINT workout_class_trainer_fkey FOREIGN KEY (trainer_id)
+--         REFERENCES public.users (user_id)
+--         ON UPDATE NO ACTION
+--         ON DELETE CASCADE
+-- );
+
+-- TABLESPACE pg_default;
 
 
 CREATE TABLE IF NOT EXISTS public.space_fleet_memberships
