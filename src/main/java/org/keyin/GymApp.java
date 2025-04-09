@@ -15,6 +15,10 @@ public class GymApp {
         MembershipService membershipService = new MembershipService();
         WorkoutClassService workoutService = new WorkoutClassService();
 
+        // Add default users
+        userService.loadDefaultUsers();
+
+
         // Scanner for user input
         Scanner scanner = new Scanner(System.in);
         int choice;
