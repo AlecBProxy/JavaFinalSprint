@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS public.workout_class CASCADE;
 DROP TABLE IF EXISTS public.users CASCADE;
 
 CREATE TABLE users (
-    id INT PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
     password VARCHAR(100) NOT NULL,
     email VARCHAR(100),

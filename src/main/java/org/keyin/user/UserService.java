@@ -5,10 +5,10 @@ import java.sql.SQLException;
 import org.mindrot.jbcrypt.BCrypt;
 
 public class UserService {
-    private UserDao userDao;
+    private UserDAO userDao;
 
     public UserService() {
-        userDao = new UserDao();
+        userDao = new UserDAO();
     }
 
     public void addUser(User user) throws SQLException {
