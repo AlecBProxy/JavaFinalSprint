@@ -1,3 +1,6 @@
+DROP TABLE IF EXISTS public.workout_class CASCADE;
+DROP TABLE IF EXISTS public.users CASCADE;
+
 CREATE TABLE users (
     id INT PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
@@ -8,7 +11,6 @@ CREATE TABLE users (
     role VARCHAR(20)
 );
 
-Create the Workout Class table
 CREATE TABLE IF NOT EXISTS public.workout_class
 (
     workout_class_id SERIAL PRIMARY KEY,
@@ -16,7 +18,7 @@ CREATE TABLE IF NOT EXISTS public.workout_class
     workout_class_description VARCHAR(250),
     trainer_id INTEGER NOT NULL,
     CONSTRAINT workout_class_trainer_fkey FOREIGN KEY (trainer_id)
-        REFERENCES public.users (user_id)
+        REFERENCES public.users (id)
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 );

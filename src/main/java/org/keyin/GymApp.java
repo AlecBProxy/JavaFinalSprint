@@ -21,7 +21,6 @@ public class GymApp {
         // Add default users
         userService.loadDefaultUsers();
 
-
         // Scanner for user input
         Scanner scanner = new Scanner(System.in);
         int choice;
@@ -55,7 +54,7 @@ public class GymApp {
             switch (choice) {
                 case 1 -> addNewUser(scanner, userService);
                 case 2 -> {
-                    // logInAsUser(scanner, userService, membershipService, workoutService);
+                    logInAsUser(scanner, userService, membershipService, workoutService);
                 }
                 case 3 -> System.out.println("Exiting the program...");
                 case 4 -> {
@@ -84,33 +83,32 @@ public class GymApp {
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
 
-        // try {
-        // User user = userService.loginForUser(username, password);
-        // if (user != null) {
-        // System.out.println("Login Successful! Welcome " + user.getUserName());
-        // switch (user.getUserRole().toLowerCase()) {
-        // case "admin":
-        // showAdminMenu(scanner, user, userService, membershipService, workoutService);
-        // break;
-        // case "trainer":
-        // // show menu for trainer
-        // break;
-        // case "member":
-        // // show menu for member
-        // break;
-        // default:
+        try {
+            User user = userService.loginForUser(username, password);
+            if (user != null) {
+                System.out.println("Login Successful! Welcome " + user.getUsername() + "!");
+                switch (user.getRole().toLowerCase()) {
+                    case "admin":
+                        AdminMenuHandler.display(scanner, user, userService, membershipService, workoutService);
+                        break;
+                    case "trainer":
+                        TrainerMenuHandler.display(scanner, user, userService, workoutService);
+                        break;
+                    case "member":
+                        MemberMenuHandler.display(scanner, user, userService, membershipService);
+                        break;
+                    default:
 
-        // break;
-        // }
-        // } else {
-        // System.out.println("Login Failed! Invalid credentials.");
-        // }
-        // } catch (SQLException e) {
-        // System.out.println("An error occurred while logging in.");
-        // e.printStackTrace();
-        // }
+                        break;
+                }
+            } else {
+                System.out.println("Login Failed! Invalid credentials.");
+            }
+        } catch (SQLException e) {
+            System.out.println("An error occurred while logging in.");
+            e.printStackTrace();
+        }
     }
-    
 
     // Minimal implementation of adding a new user
     private static void addNewUser(Scanner scanner, UserService userService) {

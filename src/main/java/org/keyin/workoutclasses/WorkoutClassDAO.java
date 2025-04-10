@@ -52,58 +52,51 @@ public class WorkoutClassDAO {
 
     public List<WorkoutClass> getWorkoutClassesByTrainerId(int trainerId) throws SQLException {
         List<WorkoutClass> classes = new ArrayList<>();
-    
+
         String sql = "SELECT * FROM workout_class WHERE trainer_id = ?";
-    
+
         try (Connection connection = DatabaseConnection.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
-    
+                PreparedStatement stmt = connection.prepareStatement(sql)) {
+
             stmt.setInt(1, trainerId);
             ResultSet rs = stmt.executeQuery();
-    
+
             while (rs.next()) {
                 WorkoutClass wc = new WorkoutClass(
-                    rs.getInt("workout_class_id"),
-                    rs.getString("workout_class_type"),
-                    rs.getString("workout_class_description"),
-                    rs.getInt("trainer_id")
-                );
+                        rs.getInt("workout_class_id"),
+                        rs.getString("workout_class_type"),
+                        rs.getString("workout_class_description"),
+                        rs.getInt("trainer_id"));
                 classes.add(wc);
             }
         }
-    
+
         return classes;
     }
 
-    
-
-
     public boolean updateWorkoutClass(WorkoutClass workoutClass) throws SQLException {
         String sql = "UPDATE workout_class SET workout_class_type = ?, workout_class_description = ? WHERE workout_class_id = ?";
-    
+
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-    
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, workoutClass.getWorkoutClassType());
             stmt.setString(2, workoutClass.getWorkoutClassDescription());
             stmt.setInt(3, workoutClass.getWorkoutClassId());
-    
+
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         }
     }
-    
-    
 
     public boolean deleteWorkoutClass(int classId) throws SQLException {
         String sql = "DELETE FROM workout_class WHERE workout_class_id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, classId);
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
         }
     }
-    
 
 }
