@@ -33,10 +33,6 @@ public class MembershipService {
             System.out.println("Membership cost cannot be negative.");
             return false;
         }
-        if (membership.getStatus() == null || membership.getStatus().isEmpty()) {
-            // Defaults to active if not provided //
-            membership.setStatus("Active");
-        }
 
         // If we pass the checks, create the membership //
         membershipDAO.createMembership(membership);

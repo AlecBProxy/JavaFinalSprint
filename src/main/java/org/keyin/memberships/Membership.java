@@ -11,7 +11,6 @@ private double membershipCost;
 private String startDate;
 private int duration; // In Months //
 private String memberType; 
-private String status; // Active or inactive membership //
 
 // Constructor //
 
@@ -22,7 +21,7 @@ public Membership(String memberName, String membershipId, double membershipCost,
     this.startDate = startDate;
     this.duration = duration;
     this.memberType = memberType;
-    this.status = status;
+
 }
 
 // No Argument Constructor //
@@ -51,9 +50,6 @@ public String getMemberType() {
     return memberType;
 }
 
-public String getStatus() {
-    return status;
-}
 
 // Setters //
 
@@ -81,10 +77,6 @@ public void setMemberType(String memberType) {
     this.memberType = memberType;
 }
 
-public void setStatus(String status) {
-    this.status = status;
-}
-
 // toString method //
 @Override
     public String toString() {
@@ -95,7 +87,6 @@ public void setStatus(String status) {
                 ", startDate='" + startDate + '\'' +
                 ", duration=" + duration +
                 ", memberType='" + memberType + '\'' +
-                ", status='" + status + '\'' +
                 '}';
     }
 

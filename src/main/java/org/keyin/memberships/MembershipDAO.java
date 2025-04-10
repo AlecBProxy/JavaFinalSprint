@@ -15,18 +15,18 @@ public class MembershipDAO {
     private static final String DB_PASS  = "";
 
     // SQL Statements //
-    private static final String INSERT_MEMBERSHIP_SQL = "INSERT INTO membership (membership_id, member_name, membership_cost, start_date, duration, member_type, status) " +
+    private static final String INSERT_MEMBERSHIP_SQL = "INSERT INTO membership (membership_id, member_name, membership_cost, start_date, duration, member_type) " +
         "VALUES (?, ?, ?, ?, ?, ?, ?)";
   
     private static final String SELECT_MEMBERSHIP_BY_ID_SQL =
-        "SELECT membership_id, member_name, membership_cost, start_date, duration, member_type, status " +
+        "SELECT membership_id, member_name, membership_cost, start_date, duration, member_type" +
         "FROM membership WHERE membership_id = ?";
 
     private static final String SELECT_ALL_MEMBERSHIPS_SQL =
-        "SELECT membership_id, member_name, membership_cost, start_date, duration, member_type, status FROM membership";
+        "SELECT membership_id, member_name, membership_cost, start_date, duration, member_type FROM membership";
 
     private static final String UPDATE_MEMBERSHIP_SQL =
-        "UPDATE membership SET member_name = ?, membership_cost = ?, start_date = ?, duration = ?, member_type = ?, status = ? " +
+        "UPDATE membership SET member_name = ?, membership_cost = ?, start_date = ?, duration = ?, member_type = ? " +
         "WHERE membership_id = ?";
 
     private static final String DELETE_MEMBERSHIP_SQL =
@@ -43,7 +43,6 @@ public class MembershipDAO {
             statement.setString(4, membership.getStartDate());
             statement.setInt(5, membership.getDuration());
             statement.setString(6, membership.getMemberType());
-            statement.setString(7, membership.getStatus());
             statement.executeUpdate();
     } catch (SQLException exception) {
             exception.printStackTrace();
@@ -70,13 +69,12 @@ public class MembershipDAO {
                 membership.setStartDate(result.getString("start_date"));
                 membership.setDuration(result.getInt("duration"));
                 membership.setMemberType(result.getString("member_type"));
-                membership.setStatus(result.getString("status"));
             }
 
         } catch (SQLException exception) {
             exception.printStackTrace();
         }
-        
+
         return membership;
     }
 
@@ -96,7 +94,6 @@ public class MembershipDAO {
                 membership.setStartDate(result.getString("start_date"));
                 membership.setDuration(result.getInt("duration"));
                 membership.setMemberType(result.getString("member_type"));
-                membership.setStatus(result.getString("status"));
                 memberships.add(membership);
             }
 
@@ -118,8 +115,7 @@ public class MembershipDAO {
             statement.setString(3, membership.getStartDate());
             statement.setInt(4, membership.getDuration());
             statement.setString(5, membership.getMemberType());
-            statement.setString(6, membership.getStatus());
-            statement.setString(7, membership.getMembershipId());
+            statement.setString(6, membership.getMembershipId());
 
             statement.executeUpdate();
 
