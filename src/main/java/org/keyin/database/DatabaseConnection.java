@@ -18,7 +18,7 @@ public class DatabaseConnection {
     // Alex R's database connection
     private static final String URL = "jdbc:postgresql://localhost:5432/javadb";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "    ";
+    private static final String PASSWORD = "Ah, I see you've arrived to insert your password.";
 
     // Abdul 's database connection
     // private static final String URL =
