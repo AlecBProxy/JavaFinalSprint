@@ -2,7 +2,6 @@ package org.keyin.memberships;
 
 import java.util.List;
 
-
 public class MembershipService {
 
     private final MembershipDAO membershipDAO;
@@ -84,6 +83,40 @@ public class MembershipService {
         }
         membershipDAO.deleteMembership(membershipId);
         return true;
+    }
+
+    // Method to purchase a gym membership //
+    public boolean purchaseMembership(String Name, String membershipType, double membershipCost, String startDate) {
+
+        // Validate inputs //
+        if (Name == null || Name.isEmpty()) {
+            System.out.println("Member name cannot be empty.");
+            return false;
+        }
+        if (membershipType == null || membershipType.isEmpty()) {
+            System.out.println("Membership type cannot be empty.");
+            return false;
+        }
+        if (membershipCost < 0) {
+            System.out.println("Membership cost cannot be negative.");
+            return false;
+        }
+        if (startDate == null || startDate.isEmpty()) {
+            System.out.println("Start date cannot be empty.");
+            return false;
+        }
+
+        
+        // Create a new membership object //
+        Membership membership = new Membership();
+        membership.setMemberName(Name);
+        membership.setMembershipId(membershipType);
+        membership.setMembershipCost(membershipCost);
+        membership.setStartDate(startDate);
+
+        return createMembership(membership);
+
+        
     }
 
 }

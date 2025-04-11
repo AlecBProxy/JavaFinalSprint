@@ -1,18 +1,21 @@
 package org.keyin.memberships;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.keyin.database.DatabaseConnection;
+
 public class MembershipDAO {
 
-    private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/";
-    private static final String DB_USER  = "postgres";
-    private static final String DB_PASS  = "";
+    // private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/";
+    // private static final String DB_USER  = "postgres";
+    // private static final String DB_PASS  = "";
+
+
 
     // SQL Statements //
     private static final String INSERT_MEMBERSHIP_SQL = "INSERT INTO membership (membership_id, member_name, membership_cost, start_date, duration, member_type) " +
@@ -35,7 +38,7 @@ public class MembershipDAO {
 
     // Method to create a new membership //
     public void createMembership(Membership membership) {
-        try (Connection connection = DriverManager.getConnection(JDBC_URL,DB_USER, DB_PASS);
+        try (Connection connection = DatabaseConnection.getConnection();
          PreparedStatement statement = connection.prepareStatement(INSERT_MEMBERSHIP_SQL)) {
             statement.setString(1, membership.getMembershipId());
             statement.setString(2, membership.getMemberName());
@@ -56,7 +59,7 @@ public class MembershipDAO {
     public Membership getMembershipById(String membershipId) {
         Membership membership = null; 
 
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+        try (Connection connection = DatabaseConnection.getConnection();
         PreparedStatement statement = connection.prepareStatement(SELECT_MEMBERSHIP_BY_ID_SQL)) {
             statement.setString(1, membershipId);
             ResultSet result = statement.executeQuery();
@@ -82,7 +85,7 @@ public class MembershipDAO {
     public List<Membership> getAllMemberships() {
         List<Membership> memberships = new ArrayList<>();
 
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+        try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(SELECT_ALL_MEMBERSHIPS_SQL)) {
 
             ResultSet result = statement.executeQuery();
@@ -106,7 +109,7 @@ public class MembershipDAO {
 
     // Method to update memembership //
     public void updateMembership(Membership membership) {
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+        try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_MEMBERSHIP_SQL)) {
 
             // membership_id is at the end of the update query //
@@ -127,7 +130,7 @@ public class MembershipDAO {
     // Method to delete a membership //
 
     public void deleteMembership(String membershipId) {
-        try (Connection connection = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS);
+        try (Connection connection = DatabaseConnection.getConnection();
              PreparedStatement statement = connection.prepareStatement(DELETE_MEMBERSHIP_SQL)) {
 
             statement.setString(1, membershipId);
