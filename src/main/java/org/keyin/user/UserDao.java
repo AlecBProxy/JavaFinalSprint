@@ -5,8 +5,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.keyin.database.DatabaseConnection;
+
 
 public class UserDAO {
 
@@ -26,6 +29,15 @@ public class UserDAO {
         }
     }
 
+    public boolean deleteUser(int userId) throws SQLException {
+        String query = "DELETE FROM users WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, userId);
+            return stmt.executeUpdate() > 0;
+        }
+    }
+    
     public User getUserByUsername(String username) throws SQLException {
         String sql = "SELECT * FROM users WHERE username = ?";
         DriverManager DatabaseConnector;
@@ -72,4 +84,31 @@ public class UserDAO {
         }
         return null;
     }
+
+    public List<User> getAllUsers() throws SQLException {
+        List<User> userList = new ArrayList<>();
+    
+        String query = "SELECT * FROM users";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+    
+            while (rs.next()) {
+                User user = new User(
+                    rs.getInt("id"),
+                    rs.getString("username"),
+                    rs.getString("password"),
+                    rs.getString("email"),
+                    rs.getString("phone"),
+                    rs.getString("address"),
+                    rs.getString("role")
+                );
+                userList.add(user);
+            }
+        }
+    
+        return userList;
+    }
+    
+    
 }

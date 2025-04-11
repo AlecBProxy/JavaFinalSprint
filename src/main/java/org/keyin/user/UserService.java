@@ -1,6 +1,7 @@
 package org.keyin.user;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -17,6 +18,10 @@ public class UserService {
         userDao.addUser(user); 
     }
 
+    public boolean deleteUser(int userId) throws SQLException {
+        return userDao.deleteUser(userId);
+    }    
+
     public User loginForUser(String username, String enteredPassword) throws SQLException {
         User userFromDb = userDao.getUserByUsername(username);  
 
@@ -27,10 +32,14 @@ public class UserService {
         return null; 
     }
 
-
     public User getUserByUsername(String username) throws SQLException {
         return userDao.getUserByUsername(username);
     }
+
+    public List<User> getAllUsers() throws SQLException {
+    return userDao.getAllUsers();
+    }
+
 
     public void loadDefaultUsers() {
         try {

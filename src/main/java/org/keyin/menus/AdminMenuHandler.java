@@ -33,11 +33,43 @@ public class AdminMenuHandler {
 
             switch (choice) {
                 case 1 -> {
-                    System.out.println("View all users under construction.");
+                    try {
+                        var users = userService.getAllUsers();
+                        if (users.isEmpty()) {
+                            System.out.println("No users found.");
+                        } else {
+                            System.out.println("=== All Registered Users ===");
+                            for (User u : users) {
+                                System.out.println("ID: " + u.getUserId());
+                                System.out.println("Username: " + u.getUsername());
+                                System.out.println("Email: " + u.getEmail());
+                                System.out.println("Phone: " + u.getPhoneNumber());
+                                System.out.println("Address: " + u.getAddress());
+                                System.out.println("Role: " + u.getRole());
+                                System.out.println("-------------------------");
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error retrieving users: " + e.getMessage());
+                    }
+                    break;
                 }
+                
                 case 2 -> {
-
-                    System.out.println("Delete a user under construction.");
+                    System.out.print("Enter the ID of the user to delete: ");
+                    int userIdToDelete = Integer.parseInt(scanner.nextLine());
+                
+                    try {
+                        boolean success = userService.deleteUser(userIdToDelete);
+                        if (success) {
+                            System.out.println("User deleted.");
+                        } else {
+                            System.out.println("User not found.");
+                        }
+                    } catch (Exception e) {
+                        System.out.println("An error occurred while deleting the user: " + e.getMessage());
+                    }
+                    break;
                 }
                 case 3 -> {
 
