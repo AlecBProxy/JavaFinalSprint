@@ -10,9 +10,9 @@ import org.keyin.workoutclasses.WorkoutClassService;
 public class AdminMenuHandler {
 
     public static void display(Scanner scanner, User user, UserService userService,
-                               MembershipService membershipService, WorkoutClassService workoutService) {
+            MembershipService membershipService, WorkoutClassService workoutService) {
         System.out.println("\n\nWelcome " + user.getUsername() + "!");
-        
+
         while (true) {
             System.out.println("\n=== Admin Menu ===");
             System.out.println("1. View all users");
@@ -26,7 +26,7 @@ public class AdminMenuHandler {
                 System.out.println("Invalid input! Please enter a number.");
                 scanner.next(); // consume invalid input
             }
-            
+
             int choice = scanner.nextInt();
             scanner.nextLine(); // consume newline
             System.out.println("");
@@ -42,6 +42,7 @@ public class AdminMenuHandler {
                 case 3 -> {
 
                     System.out.println("View all memberships and total expenses under construction.");
+
                 }
                 case 4 -> {
                     System.out.println("Exiting the admin menu...");

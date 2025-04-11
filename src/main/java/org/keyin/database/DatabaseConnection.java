@@ -18,7 +18,7 @@ public class DatabaseConnection {
     // Alex R's database connection
     private static final String URL = "jdbc:postgresql://localhost:5432/javadb";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "Ah, I see you've arrived to insert your password.";
+    private static final String PASSWORD = "    ";
 
     // Abdul 's database connection
     // private static final String URL =
@@ -27,7 +27,8 @@ public class DatabaseConnection {
     // private static final String PASSWORD = "Keyin2021";
 
     // Noah's database connection //
-    // private static final String URL = "jdbc:postgresql://localhost:5432/s3javafinal"; //
+    // private static final String URL =
+    // "jdbc:postgresql://localhost:5432/s3javafinal"; //
     // private static final String USER = "postgres"; //
     // private static final String PASSWORD = "Keyin_db_2025"; //
 

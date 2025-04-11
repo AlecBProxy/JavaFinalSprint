@@ -33,6 +33,13 @@ public class MembershipService {
             return false;
         }
 
+        // Check if membership already exists //
+        Membership existingMembership = membershipDAO.getMembershipById(membership.getMembershipId());
+        if (existingMembership != null) {
+            System.out.println("Membership with ID " + membership.getMembershipId() + " already exists.");
+            return false;
+        }
+
         // If we pass the checks, create the membership //
         membershipDAO.createMembership(membership);
         return true;
@@ -106,7 +113,6 @@ public class MembershipService {
             return false;
         }
 
-        
         // Create a new membership object //
         Membership membership = new Membership();
         membership.setMemberName(Name);
@@ -116,7 +122,6 @@ public class MembershipService {
 
         return createMembership(membership);
 
-        
     }
 
 }
