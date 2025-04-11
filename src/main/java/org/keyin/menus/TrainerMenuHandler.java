@@ -30,7 +30,7 @@ public class TrainerMenuHandler {
 
             switch (choice) {
                 case 1 -> viewAssignedClasses(user, workoutService);
-                case 2 -> createWorkoutClass(scanner, workoutService);
+                case 2 -> createWorkoutClass(scanner, userService, workoutService);
                 case 3 -> updateWorkoutClass(scanner, user, workoutService);
                 case 4 -> deleteWorkoutClass(scanner, workoutService);
                 // case 5 -> {}  // Membership logic not yet implemented
@@ -64,11 +64,12 @@ public class TrainerMenuHandler {
         }
     }
 
-    private static void createWorkoutClass(Scanner scanner, WorkoutClassService workoutService) {
+    private static void createWorkoutClass(Scanner scanner, UserService userService, WorkoutClassService workoutService) {
         System.out.print("Enter workout type: ");
         String type = scanner.nextLine();
         System.out.print("Enter workout description: ");
         String desc = scanner.nextLine();
+        displayAvailableTrainers(userService);
         System.out.print("Enter your trainer ID: ");
         int trainerId = Integer.parseInt(scanner.nextLine());
 
@@ -76,6 +77,7 @@ public class TrainerMenuHandler {
 
         try {
             workoutService.addWorkoutClass(wc);
+            System.out.println();
             System.out.println(" Workout class added!");
         } catch (SQLException e) {
             System.out.println(" Error: " + e.getMessage());
@@ -137,4 +139,24 @@ public class TrainerMenuHandler {
             System.out.println(" Error: " + e.getMessage());
         }
     }
+
+    private static void displayAvailableTrainers(UserService userService) {
+        try {
+            List<User> allUsers = userService.getAllUsers();
+            System.out.println();
+            System.out.println("Available Trainers:");
+            System.out.printf("%-5s | %-15s | %-15s%n", "ID", "Username", "Email");
+            System.out.println("----------------------------------------");
+    
+            for (User user : allUsers) {
+                if ("trainer".equalsIgnoreCase(user.getRole())) {
+                    System.out.printf("%-5d | %-15s | %-15s%n", user.getUserId(), user.getUsername(), user.getEmail());
+                }
+            }
+            System.out.println();
+        } catch (SQLException e) {
+            System.out.println("Error loading trainer list: " + e.getMessage());
+        }
+    }
+    
 }
