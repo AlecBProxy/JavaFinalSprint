@@ -37,9 +37,6 @@ public class GymApp {
             System.out.println("1. Add a new user");
             System.out.println("2. Login as a user");
             System.out.println("3. Exit");
-            System.out.println("4. temp: view member menu");
-            System.out.println("5. temp: view trainer menu");
-            System.out.println("6. temp: view admin menu");
             System.out.print("\nEnter your choice: ");
 
             // Validate input
@@ -57,17 +54,6 @@ public class GymApp {
                     logInAsUser(scanner, userService, membershipService, workoutService);
                 }
                 case 3 -> System.out.println("Exiting the program...");
-                case 4 -> {
-                    MemberMenuHandler.display(scanner, user, userService, membershipService);
-                }
-
-                case 5 -> {
-                    TrainerMenuHandler.display(scanner, user, userService, workoutService);
-
-                }
-                case 6 -> {
-                    AdminMenuHandler.display(scanner, user, userService, membershipService, workoutService);
-                }
 
                 default -> System.out.println("Invalid choice! Please select a valid option.");
             }
@@ -88,18 +74,11 @@ public class GymApp {
             if (user != null) {
                 System.out.println("Login Successful! Welcome " + user.getUsername() + "!");
                 switch (user.getRole().toLowerCase()) {
-                    case "admin":
+                    case "admin" ->
                         AdminMenuHandler.display(scanner, user, userService, membershipService, workoutService);
-                        break;
-                    case "trainer":
-                        TrainerMenuHandler.display(scanner, user, userService, workoutService);
-                        break;
-                    case "member":
-                        MemberMenuHandler.display(scanner, user, userService, membershipService);
-                        break;
-                    default:
-
-                        break;
+                    case "trainer" -> TrainerMenuHandler.display(scanner, user, userService, workoutService);
+                    case "member" -> MemberMenuHandler.display(scanner, user, userService, membershipService);
+                    default -> System.out.println("Invalid role! No menu available.");
                 }
             } else {
                 System.out.println("Login Failed! Invalid credentials.");
