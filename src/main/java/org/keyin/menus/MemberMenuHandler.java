@@ -2,15 +2,19 @@ package org.keyin.menus;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.Scanner;
 
+import org.keyin.memberships.Membership;
 import org.keyin.memberships.MembershipService;
 import org.keyin.user.User;
 import org.keyin.user.UserService;
+import org.keyin.workoutclasses.WorkoutClass;
+import org.keyin.workoutclasses.WorkoutClassService;
 
 public class MemberMenuHandler {
     public static void display(Scanner scanner, User user, UserService userService,
-            MembershipService membershipService) {
+            MembershipService membershipService, WorkoutClassService workoutService) {
         System.out.println("\n\nWelcome " + user.getUsername() + "!");
 
         while (true) {
@@ -34,11 +38,52 @@ public class MemberMenuHandler {
 
             switch (choice) {
                 case 1 -> {
-                    System.out.println("Workout classes under construction.");
+                    try {
+                        List<WorkoutClass> classes = workoutService.getAllWorkoutClasses();
+                        if (classes.isEmpty()) {
+                            System.out.println("No workout classes available.");
+                        } else {
+                            System.out.println("\nAvailable Workout Classes:");
+                            System.out.printf("%-5s | %-20s | %-30s%n", "ID", "Type", "Description");
+                            System.out.println("---------------------------------------------------------------");
+                
+                            for (WorkoutClass wc : classes) {
+                                System.out.printf("%-5d | %-20s | %-30s%n",
+                                        wc.getWorkoutClassId(),
+                                        wc.getWorkoutClassType(),
+                                        wc.getWorkoutClassDescription());
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error loading workout classes: " + e.getMessage());
+                    }
                 }
+                
+
+
                 case 2 -> {
-                    System.out.println("Membership purchase under construction.");
+                    System.out.print("Do you want to purchase a new membership? (yes/no): ");
+                    String confirm = scanner.nextLine().trim().toLowerCase();
+                    if (!confirm.equals("yes")) {
+                        System.out.println(" Membership purchase cancelled.");
+                        break;
+                    }
+                
+                    LocalDate today = LocalDate.now();
+                    int userId = user.getUserId();
+                
+                    try {
+                        Membership membership = new Membership(0, userId, today);
+                        membershipService.addMembership(membership);
+                        System.out.println(" Membership purchased successfully on " + today + "!");
+                    } catch (Exception e) {
+                        System.out.println(" Error purchasing membership: " + e.getMessage());
+                    }
                 }
+                
+
+
+
                 case 3 -> {
                     LocalDate purchDate = LocalDate.of(2025, 2, 1);
                     double membershipCost = 100.0;

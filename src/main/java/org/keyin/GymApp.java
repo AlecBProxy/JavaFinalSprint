@@ -77,7 +77,7 @@ public class GymApp {
                     case "admin" ->
                         AdminMenuHandler.display(scanner, user, userService, membershipService, workoutService);
                     case "trainer" -> TrainerMenuHandler.display(scanner, user, userService, workoutService);
-                    case "member" -> MemberMenuHandler.display(scanner, user, userService, membershipService);
+                    case "member" -> MemberMenuHandler.display(scanner, user, userService, membershipService,  workoutService);
                     default -> System.out.println("Invalid role! No menu available.");
                 }
             } else {
