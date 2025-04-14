@@ -1,40 +1,67 @@
 package org.keyin.memberships;
 
-import org.keyin.database.DatabaseConnection;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.keyin.database.DatabaseConnection;
 
 public class MembershipDAO {
 
     public void addMembership(Membership membership) throws SQLException {
-        Connection conn = DatabaseConnection.getConnection();
         String sql = "INSERT INTO membership (user_id, start_date) VALUES (?, ?)";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, membership.getUserId());
-        stmt.setDate(2, Date.valueOf(membership.getStartDate()));
-        stmt.executeUpdate();
-        conn.close();
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, membership.getUserId());
+            stmt.setDate(2, Date.valueOf(membership.getStartDate()));
+            stmt.executeUpdate();
+        }
     }
 
-    public List<Membership> getMembershipsByUserId(int userId) throws SQLException {
-        List<Membership> memberships = new ArrayList<>();
-        Connection conn = DatabaseConnection.getConnection();
+    // Get one membership by ID
+    public Membership getMembershipById(int userId) throws SQLException {
         String sql = "SELECT * FROM membership WHERE user_id = ?";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, userId);
-        ResultSet rs = stmt.executeQuery();
-
-        while (rs.next()) {
-            memberships.add(new Membership(
-                    rs.getInt("membership_id"),
-                    rs.getInt("user_id"),
-                    rs.getDate("start_date").toLocalDate()
-            ));
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Membership membership = new Membership();
+                    membership.setMembershipId(rs.getInt("membership_id"));
+                    membership.setUserId(rs.getInt("user_id"));
+                    membership.setStartDate(rs.getDate("start_date").toLocalDate());
+                    return membership;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving membership: " + e.getMessage());
+            throw e;
         }
+        return null;
+    }
 
-        conn.close();
+    // Get all memberships
+    public List<Membership> getAllMemberships() throws SQLException {
+        List<Membership> memberships = new ArrayList<>();
+        String sql = "SELECT * FROM membership";
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Membership membership = new Membership();
+                membership.setMembershipId(rs.getInt("membership_id"));
+                membership.setUserId(rs.getInt("user_id"));
+                membership.setStartDate(rs.getDate("start_date").toLocalDate());
+                memberships.add(membership);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving memberships: " + e.getMessage());
+            throw e;
+        }
         return memberships;
     }
 }

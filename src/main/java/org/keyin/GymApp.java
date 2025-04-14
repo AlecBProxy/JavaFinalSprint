@@ -19,7 +19,7 @@ public class GymApp {
         WorkoutClassService workoutService = new WorkoutClassService();
 
         // Add default users
-        userService.loadDefaultUsers();
+        // userService.loadDefaultUsers();
 
         // Scanner for user input
         Scanner scanner = new Scanner(System.in);
@@ -76,8 +76,10 @@ public class GymApp {
                 switch (user.getRole().toLowerCase()) {
                     case "admin" ->
                         AdminMenuHandler.display(scanner, user, userService, membershipService, workoutService);
-                    case "trainer" -> TrainerMenuHandler.display(scanner, user, userService, workoutService);
-                    case "member" -> MemberMenuHandler.display(scanner, user, userService, membershipService,  workoutService);
+                    case "trainer" ->
+                        TrainerMenuHandler.display(scanner, user, userService, workoutService, membershipService);
+                    case "member" ->
+                        MemberMenuHandler.display(scanner, user, userService, membershipService, workoutService);
                     default -> System.out.println("Invalid role! No menu available.");
                 }
             } else {

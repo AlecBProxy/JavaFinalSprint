@@ -13,6 +13,9 @@ public class Membership {
         this.startDate = startDate;
     }
 
+    public Membership() {
+    }
+
     public int getMembershipId() {
         return membershipId;
     }
@@ -36,7 +39,6 @@ public class Membership {
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
-
 
     @Override
     public String toString() {

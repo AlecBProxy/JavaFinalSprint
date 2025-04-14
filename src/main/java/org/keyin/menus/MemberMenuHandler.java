@@ -1,7 +1,7 @@
 package org.keyin.menus;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Scanner;
 
@@ -46,7 +46,7 @@ public class MemberMenuHandler {
                             System.out.println("\nAvailable Workout Classes:");
                             System.out.printf("%-5s | %-20s | %-30s%n", "ID", "Type", "Description");
                             System.out.println("---------------------------------------------------------------");
-                
+
                             for (WorkoutClass wc : classes) {
                                 System.out.printf("%-5d | %-20s | %-30s%n",
                                         wc.getWorkoutClassId(),
@@ -58,8 +58,6 @@ public class MemberMenuHandler {
                         System.out.println("Error loading workout classes: " + e.getMessage());
                     }
                 }
-                
-
 
                 case 2 -> {
                     System.out.print("Do you want to purchase a new membership? (yes/no): ");
@@ -68,10 +66,10 @@ public class MemberMenuHandler {
                         System.out.println(" Membership purchase cancelled.");
                         break;
                     }
-                
+
                     LocalDate today = LocalDate.now();
                     int userId = user.getUserId();
-                
+
                     try {
                         Membership membership = new Membership(0, userId, today);
                         membershipService.addMembership(membership);
@@ -80,18 +78,26 @@ public class MemberMenuHandler {
                         System.out.println(" Error purchasing membership: " + e.getMessage());
                     }
                 }
-                
-
-
 
                 case 3 -> {
-                    LocalDate purchDate = LocalDate.of(2025, 2, 1);
-                    double membershipCost = 100.0;
+                    try {
+                        Membership membership = membershipService.getMembershipById(user.getUserId());
+                        if (membership == null) {
+                            System.out.println("No membership found for user ID: " + user.getUserId() +
+                                    ". Please purchase a membership first.");
+                            break;
+                        }
+                        int membershipDuration = membershipService.getMembershipDurationInMonths(user.getUserId());
+                        double membershipCost = 50.0; // Monthly cost of membership
+                        LocalDate purchDate = membership.getStartDate();
 
-                    double totalExpenses = calculateMembershipExpenses(purchDate, membershipCost);
-                    System.out.println("Membership purchase date:   " + purchDate);
-                    System.out.println("Membership cost per month: $" + membershipCost);
-                    System.out.printf("\nTotal membership expenses: $%.2f%n", totalExpenses);
+                        System.out.println("Membership purchase date:  " + purchDate);
+                        System.out.println("Membership cost per month: $" + membershipCost);
+                        System.out.printf("\nTotal membership expenses: $%.2f%n",
+                                membershipCost * membershipDuration);
+                    } catch (SQLException e) {
+                        System.out.println("Error retrieving membership details: " + e.getMessage());
+                    }
 
                 }
                 case 4 -> {
@@ -103,30 +109,4 @@ public class MemberMenuHandler {
         }
     }
 
-    /**
-     * Calculate the total membership expenses.
-     * 
-     * The calculation is based on the number of months (rounded up if there is any
-     * partial month)
-     * between the purchase date and the current date multiplied by the monthly
-     * membership cost.
-     * 
-     * @param purchaseDate the date when the membership was purchased
-     * @param monthlyCost  the cost per month
-     * @return the total expense
-     */
-    private static double calculateMembershipExpenses(LocalDate purchaseDate, double monthlyCost) {
-        LocalDate now = LocalDate.now();
-
-        // Calculate full months between the purchaseDate and now
-        long monthsBetween = ChronoUnit.MONTHS.between(purchaseDate, now);
-
-        // Check for any additional partial month
-        LocalDate adjustedDate = purchaseDate.plusMonths(monthsBetween);
-        if (adjustedDate.isBefore(now)) { // there are remaining days in a partial month
-            monthsBetween++;
-        }
-
-        return monthsBetween * monthlyCost;
-    }
 }

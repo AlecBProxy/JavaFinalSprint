@@ -1,9 +1,12 @@
 package org.keyin.menus;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
+import org.keyin.memberships.Membership;
+import org.keyin.memberships.MembershipService;
 import org.keyin.user.User;
 import org.keyin.user.UserService;
 import org.keyin.workoutclasses.WorkoutClass;
@@ -12,7 +15,7 @@ import org.keyin.workoutclasses.WorkoutClassService;
 public class TrainerMenuHandler {
 
     public static void display(Scanner scanner, User user, UserService userService,
-            WorkoutClassService workoutService) {
+            WorkoutClassService workoutService, MembershipService membershipService) {
         System.out.println("\n\nWelcome " + user.getUsername() + "!");
 
         do {
@@ -31,10 +34,28 @@ public class TrainerMenuHandler {
 
             switch (choice) {
                 case 1 -> viewAssignedClasses(user, workoutService);
-                case 2 -> createWorkoutClass(scanner, workoutService);
+                case 2 -> createWorkoutClass(scanner, user, workoutService);
                 case 3 -> updateWorkoutClass(scanner, user, workoutService);
                 case 4 -> deleteWorkoutClass(scanner, workoutService);
-                // case 5 -> {} // Membership logic not yet implemented
+                case 5 -> {
+                    System.out.print("Do you want to purchase a new membership? (yes/no): ");
+                    String confirm = scanner.nextLine().trim().toLowerCase();
+                    if (!confirm.equals("yes")) {
+                        System.out.println(" Membership purchase cancelled.");
+                        break;
+                    }
+
+                    LocalDate today = LocalDate.now();
+                    int userId = user.getUserId();
+
+                    try {
+                        Membership membership = new Membership(0, userId, today);
+                        membershipService.addMembership(membership); // Use the passed MembershipService instance
+                        System.out.println(" Membership purchased successfully on " + today + "!");
+                    } catch (Exception e) {
+                        System.out.println(" Error purchasing membership: " + e.getMessage());
+                    }
+                }
                 case 6 -> {
                     System.out.println("Exiting the trainer menu...");
                     return;
@@ -65,13 +86,12 @@ public class TrainerMenuHandler {
         }
     }
 
-    private static void createWorkoutClass(Scanner scanner, WorkoutClassService workoutService) {
+    private static void createWorkoutClass(Scanner scanner, User user, WorkoutClassService workoutService) {
         System.out.print("Enter workout type: ");
         String type = scanner.nextLine();
         System.out.print("Enter workout description: ");
         String desc = scanner.nextLine();
-        System.out.print("Enter your trainer ID: ");
-        int trainerId = Integer.parseInt(scanner.nextLine());
+        int trainerId = user.getUserId();
 
         WorkoutClass wc = new WorkoutClass(0, type, desc, trainerId);
 

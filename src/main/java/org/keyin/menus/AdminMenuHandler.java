@@ -2,10 +2,10 @@ package org.keyin.menus;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import org.keyin.memberships.Membership;
 import org.keyin.memberships.MembershipService;
 import org.keyin.user.User;
 import org.keyin.user.UserService;
@@ -76,34 +76,27 @@ public class AdminMenuHandler {
                     break;
                 }
                 case 3 -> {
-
-                    System.out.println("View all memberships and total expenses under construction.");
-
-                    double membershipCost = 50.0; // Monthly cost of membership
-                    // Temporary dummy membership data
-                    // For now, create a list of dummy memberships with purchase dates and monthly
-                    // cost ($50)
-                    List<MembershipDummy> dummyMemberships = new ArrayList<>();
-                    dummyMemberships.add(new MembershipDummy(LocalDate.of(2025, 1, 15)));
-                    dummyMemberships.add(new MembershipDummy(LocalDate.of(2024, 11, 1)));
-                    dummyMemberships.add(new MembershipDummy(LocalDate.of(2025, 2, 10)));
-
-                    // Calculate total expenses
-                    double totalExpenses = 0;
-                    for (MembershipDummy m : dummyMemberships) {
-                        totalExpenses += calculateMembershipExpense(m.getPurchaseDate(), membershipCost);
+                    try {
+                        List<Membership> memberships = membershipService.getAllMemberships();
+                        if (memberships.isEmpty()) {
+                            System.out.println("No memberships found.");
+                        } else {
+                            double totalRevenue = 0.0;
+                            double monthlyCost = 50.0; // Fixed membership cost
+                            for (Membership m : memberships) {
+                                int durationMonths = calculateMembershipDurationInMonths(m.getStartDate());
+                                System.out.println("Membership ID: " + m.getMembershipId());
+                                System.out.println("User ID: " + m.getUserId());
+                                System.out.println("Duration (months): " + durationMonths);
+                                System.out.println("User expenses: $" + (durationMonths * monthlyCost));
+                                System.out.println("-------------------------");
+                                totalRevenue += durationMonths * monthlyCost;
+                            }
+                            System.out.println("Total membership revenue: $" + totalRevenue);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error retrieving memberships: " + e.getMessage());
                     }
-
-                    // Print out the details
-                    System.out.println("\n=== Memberships and Expenses ===");
-                    System.out.println("Membership cost per month: $" + membershipCost);
-                    System.out.println("Total number of memberships: " + dummyMemberships.size());
-                    System.out.println("Membership purchase dates:");
-                    for (MembershipDummy m : dummyMemberships) {
-                        System.out.println(" - " + m.getPurchaseDate());
-                    }
-                    System.out.println("\nTotal membership expenses for all users: $" + totalExpenses);
-
                 }
                 case 4 -> {
                     System.out.println("Exiting the admin menu...");
@@ -115,35 +108,22 @@ public class AdminMenuHandler {
     }
 
     /**
-     * Helper method to calculate the expense for a membership.
-     * Expense is computed based on the number of months (with any partial month
-     * rounded up)
-     * between the purchaseDate and the current date, multiplied by the monthly
-     * cost.
+     * Calculates the number of months (rounded up) from the purchase date
+     * to the current date.
+     *
+     * @param purchaseDate the membership's start date
+     * @return the total number of months (rounded up)
      */
-    private static double calculateMembershipExpense(LocalDate purchaseDate, double monthlyCost) {
+    private static int calculateMembershipDurationInMonths(LocalDate purchaseDate) {
         LocalDate now = LocalDate.now();
-        // Calculate full months between the purchase date and now
+        // Calculate the full months between purchaseDate and now
         long monthsBetween = ChronoUnit.MONTHS.between(purchaseDate, now);
-
-        // Check if there is a partial month remaining
+        // Check if adding those months to purchaseDate lands exactly on now, or if
+        // there’s a partial month
         LocalDate adjustedDate = purchaseDate.plusMonths(monthsBetween);
         if (adjustedDate.isBefore(now)) {
             monthsBetween++;
         }
-        return monthsBetween * monthlyCost;
-    }
-
-    // Temporary inner class to simulate a Membership object
-    private static class MembershipDummy {
-        private final LocalDate purchaseDate;
-
-        public MembershipDummy(LocalDate purchaseDate) {
-            this.purchaseDate = purchaseDate;
-        }
-
-        public LocalDate getPurchaseDate() {
-            return purchaseDate;
-        }
+        return (int) monthsBetween;
     }
 }
