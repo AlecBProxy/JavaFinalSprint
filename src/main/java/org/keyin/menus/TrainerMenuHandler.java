@@ -65,7 +65,7 @@ public class TrainerMenuHandler {
 
         } while (true);
     }
-
+// View Assigned Workout Classes
     private static void viewAssignedClasses(User user, WorkoutClassService workoutService) {
         try {
             List<WorkoutClass> classes = workoutService.getWorkoutClassesByTrainerId(user.getUserId());
@@ -85,6 +85,7 @@ public class TrainerMenuHandler {
             System.out.println(" Error: " + e.getMessage());
         }
     }
+// Create  Workout Classes
 
     private static void createWorkoutClass(Scanner scanner, User user, WorkoutClassService workoutService) {
         System.out.print("Enter workout type: ");
@@ -103,7 +104,28 @@ public class TrainerMenuHandler {
         }
     }
 
+    // Update Workout Classes
+
     private static void updateWorkoutClass(Scanner scanner, User user, WorkoutClassService workoutService) {
+        try {
+            List<WorkoutClass> classes = workoutService.getAllWorkoutClasses();
+            if (classes.isEmpty()) {
+                System.out.println("  No workout classes available.");
+            } else {
+                System.out.println("\n Available Workout Classes:");
+                System.out.printf("%-5s | %-20s | %-30s%n", "ID", "Type", "Description");
+                System.out.println("---------------------------------------------------------------");
+                for (WorkoutClass wc : classes) {
+                    System.out.printf("%-5d | %-20s | %-30s%n",
+                            wc.getWorkoutClassId(),
+                            wc.getWorkoutClassType(),
+                            wc.getWorkoutClassDescription());
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(" Error displaying workout classes: " + e.getMessage());
+        }
+        
         int updateId;
         while (true) {
             System.out.print("Enter workout class ID to update: ");
@@ -135,7 +157,27 @@ public class TrainerMenuHandler {
         }
     }
 
+    // Delete Workout Classes
     private static void deleteWorkoutClass(Scanner scanner, WorkoutClassService workoutService) {
+        try {
+            List<WorkoutClass> classes = workoutService.getAllWorkoutClasses();
+            if (classes.isEmpty()) {
+                System.out.println("  No workout classes available.");
+            } else {
+                System.out.println("\n Available Workout Classes:");
+                System.out.printf("%-5s | %-20s | %-30s%n", "ID", "Type", "Description");
+                System.out.println("---------------------------------------------------------------");
+                for (WorkoutClass wc : classes) {
+                    System.out.printf("%-5d | %-20s | %-30s%n",
+                            wc.getWorkoutClassId(),
+                            wc.getWorkoutClassType(),
+                            wc.getWorkoutClassDescription());
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println(" Error displaying workout classes: " + e.getMessage());
+        }
+        
         int id;
         while (true) {
             System.out.print("Enter workout class ID to delete: ");
