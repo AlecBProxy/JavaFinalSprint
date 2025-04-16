@@ -37,6 +37,7 @@ public class TrainerMenuHandler {
                 case 2 -> createWorkoutClass(scanner, user, workoutService);
                 case 3 -> updateWorkoutClass(scanner, user, workoutService);
                 case 4 -> deleteWorkoutClass(scanner, workoutService);
+                // Case 5 
                 case 5 -> {
                     System.out.print("Do you want to purchase a new membership? (yes/no): ");
                     String confirm = scanner.nextLine().trim().toLowerCase();
@@ -56,6 +57,7 @@ public class TrainerMenuHandler {
                         System.out.println(" Error purchasing membership: " + e.getMessage());
                     }
                 }
+                // Case 6
                 case 6 -> {
                     System.out.println("Exiting the trainer menu...");
                     return;
@@ -65,7 +67,7 @@ public class TrainerMenuHandler {
 
         } while (true);
     }
-// View Assigned Workout Classes
+// Case 1:  View Assigned Workout Classes
     private static void viewAssignedClasses(User user, WorkoutClassService workoutService) {
         try {
             List<WorkoutClass> classes = workoutService.getWorkoutClassesByTrainerId(user.getUserId());
@@ -85,7 +87,7 @@ public class TrainerMenuHandler {
             System.out.println(" Error: " + e.getMessage());
         }
     }
-// Create  Workout Classes
+// Case 2 : Create  Workout Classes
 
     private static void createWorkoutClass(Scanner scanner, User user, WorkoutClassService workoutService) {
         System.out.print("Enter workout type: ");
@@ -104,7 +106,7 @@ public class TrainerMenuHandler {
         }
     }
 
-    // Update Workout Classes
+    // Case 3 :Update Workout Classes
 
     private static void updateWorkoutClass(Scanner scanner, User user, WorkoutClassService workoutService) {
         try {
@@ -157,7 +159,7 @@ public class TrainerMenuHandler {
         }
     }
 
-    // Delete Workout Classes
+    // Case 4 :Delete Workout Classes
     private static void deleteWorkoutClass(Scanner scanner, WorkoutClassService workoutService) {
         try {
             List<WorkoutClass> classes = workoutService.getAllWorkoutClasses();
