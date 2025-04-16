@@ -92,9 +92,9 @@ public class MemberMenuHandler {
                         LocalDate purchDate = membership.getStartDate();
 
                         System.out.println("Membership purchase date:  " + purchDate);
-                        System.out.println("Membership cost per month: $" + membershipCost);
-                        System.out.printf("\nTotal membership expenses: $%.2f%n",
-                                membershipCost * membershipDuration);
+                        System.out.printf("Membership cost per month: $%.2f%n", membershipCost);
+                        System.out.printf("\nTotal membership expenses: $%.2f%n", 
+                                (membershipCost * membershipDuration));
                     } catch (SQLException e) {
                         System.out.println("Error retrieving membership details: " + e.getMessage());
                     }
