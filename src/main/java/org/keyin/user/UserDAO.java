@@ -13,13 +13,16 @@ import org.keyin.database.DatabaseConnection;
 public class UserDAO {
 
   public void addUser(User user) throws SQLException {
-    String query = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+    String query = "INSERT INTO users (username, password, email, phone, address, role) VALUES (?, ?, ?, ?, ?, ?)";
     try (Connection connection = DatabaseConnection.getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
       preparedStatement.setString(1, user.getUsername());
       preparedStatement.setString(2, user.getPassword());
-      preparedStatement.setString(3, user.getRole());
+      preparedStatement.setString(3, user.getEmail());
+      preparedStatement.setString(4, user.getPhoneNumber());
+      preparedStatement.setString(5, user.getAddress());
+      preparedStatement.setString(6, user.getRole());
 
       preparedStatement.executeUpdate();
     } catch (SQLException e) {

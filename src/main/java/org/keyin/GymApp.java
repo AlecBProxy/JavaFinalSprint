@@ -91,21 +91,31 @@ public class GymApp {
         }
     }
 
-    // Minimal implementation of adding a new user
     private static void addNewUser(Scanner scanner, UserService userService) {
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
         System.out.print("Enter password: ");
         String password = scanner.nextLine();
+        System.out.print("Enter email: ");
+        String email = scanner.nextLine();
+        System.out.print("Enter phone number: ");
+        String phoneNumber = scanner.nextLine();
+        System.out.print("Enter address: ");
+        String address = scanner.nextLine();
         System.out.print("Enter role (Admin/Trainer/Member): ");
         String role = scanner.nextLine();
-
+        
         // Print user details for debugging
         System.out.println("Username: " + username);
         System.out.println("Password: " + password);
+        System.out.println("Email: " + email);
+        System.out.println("Phone: " + phoneNumber);
+        System.out.println("Address: "+ address);
         System.out.println("Role: " + role);
-
-        User user = new User(1, username, password, role);
+    
+        // Use the full constructor now
+        User user = new User(1, username, password, email, phoneNumber, address, role);
+    
         try {
             userService.addUser(user);
             System.out.println("User added successfully!");
@@ -113,4 +123,5 @@ public class GymApp {
             System.out.println("Error adding user: " + e.getMessage());
         }
     }
+    
 }
