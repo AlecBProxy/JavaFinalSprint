@@ -43,7 +43,7 @@ Running the Gym Management Program
 
 Once you have downloaded the files or cloned the repository to your local computer and have met
 the necessary requirements above, to run the program type these commands into your IDE terminal: "mvn compile" 
-and then, "mvn exec:java -Dexec.mainClass="org.keyin.GymApp".
+and then, " mvn exec:java -Dexec.mainClass="org.keyin.GymApp" ".
 
 Here the menu options include:
 1. Add a new user
