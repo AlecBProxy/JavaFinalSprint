@@ -1,0 +1,73 @@
+Project Report: Gym Management Project
+Java Final Sprint
+Date due: April 17th, 2025
+============================================================================================================
+
+============================================================================================================
+User Documentation
+============================================================================================================
+
+*Please carefully read instructions before operating the gym management system*
+
+Introduction
+============================================================================================================
+
+Welcome to the gym management system! Here with this program, you can run this program to complete various tasks 
+including adding new users, logging in as a user, purchasing a gym membership, and more involving handling
+the gym management system.
+
+Requirements
+============================================================================================================
+
+1. Ensure you have an IDE (Integrated Development Environment) on your local computer device. Could be VS Code 
+    or IntelliJ for example. 
+
+2. Download all files from the repository or clone the repository in your IDE. 
+
+3. Ensure you have the Java JDK installed to assist in compiling. If you do not, here is a link:
+    https://www.oracle.com/ca-en/java/technologies/downloads/
+
+4. Install Maven installed in your IDE. If you do not, here is a link: https://maven.apache.org/download.cgi
+
+============================================================================================================
+Individual Reports
+============================================================================================================
+
+
+Alex Russell
+============================================================================================================
+
+For this project I setup the initial Trello board and team meetings. I also worked on setting up the database 
+connection and testing that to ensure it’s working. Next I worked on the CLI, creating the sub-menus and making sure they were styled consistently and ready to work with the other members classes. Finally I fixed a few errors and added some scripts.
+
+Regarding challenges, the initial one was trying to learn the concepts needed for this project that weren’t discussed during class. But I would say the main challenge in the project was trying to understand the requirements versus what a full gym application would likely have as options and functions.
+
+
+Abdul Zahiri
+============================================================================================================
+
+For this project, I created the Workout Classes feature and built the Trainer Menu, which includes options like creating, updating, and deleting workout classes. I also worked closely with my teammate on the Membership Classes and the Member Menu, helping with both functionality and testing to make sure everything worked smoothly.
+
+I was also responsible for setting up the Trainer Menu interface, making sure it was clear and easy to use. Throughout the project, we used Trello to stay organized, and I actively collaborated with the team to plan and divide tasks.
+
+
+Alexander Barry
+============================================================================================================
+
+
+
+
+
+Noah Hickey
+============================================================================================================
+
+I was responsible for creating the Membership, Membership DAO, and Membership Services files. Tested the database functionality 
+in pgAdmin and tested the menu functionality. Revised the membership associated files with a teammate. Ran through the menu systems for our video and generated Javadocs for our project. 
+
+The biggest challenge was understanding Maven and getting a handle on content not explicitly covered in class. 
+Sometimes we would realize things needed to be simplified, so we would have to review project requirements and focus on the main
+project objectives and attempt to succeed in completing them. 
+
+
+
+---End of Report---
