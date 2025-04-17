@@ -28,6 +28,46 @@ Requirements
     https://www.oracle.com/ca-en/java/technologies/downloads/
 
 4. Install Maven installed in your IDE. If you do not, here is a link: https://maven.apache.org/download.cgi
+    or you can type "mvn install" in your IDE terminal.
+
+5. Install Postgresql and run the scripts found in the file scripts.sql to establish and populate the tables.
+
+6. Update the database connection URL, username, and password in your application configuration in the 
+    Database.java file to reflect your's.
+
+Classes 
+============================================================================================================
+
+User: Base class containing general user information including username, hashed password, email, phone number,
+    address, and role.
+
+Admin: Extends User, providing administrative privileges like managing user accounts and viewing revenue.
+
+Trainer: Extends User, allows trainers to manage workout classes and memberships.
+
+Member: Extends User, enabling members to interact with workout classes and manage their memberships.
+
+UserDAO, MembershipDAO, WorkoutClassDAO: Manage direct interactions with the database, handling create, read, 
+update, and delete operations for users, memberships, and workout classes respectively.
+
+UserService, MembershipService, WorkoutClassService: Facilitate interactions between the user interface and DAO classes, encapsulating business logic.
+
+DatabaseConnection: Manages the PostgreSQL database connection.
+
+Membership: Represents membership details like membership ID, user ID, type, description, cost, and duration.
+
+WorkoutClass: Manages workout class details including class ID, type, description, and associated trainer ID.
+
+AdminMenuHandler, TrainerMenuHandler, MemberMenuHandler: Handle menu interactions and functionality specific 
+    to each user role.
+
+
+Dependencies
+============================================================================================================
+
+Maven is used for dependency management.
+
+Dependencies include PostgreSQL JDBC Driver, BCrypt, and JUnit for testing.
 
 ============================================================================================================
 Individual Reports
@@ -61,8 +101,10 @@ Alexander Barry
 Noah Hickey
 ============================================================================================================
 
-I was responsible for creating the Membership, Membership DAO, and Membership Services files. Tested the database functionality 
-in pgAdmin and tested the menu functionality. Revised the membership associated files with a teammate. Ran through the menu systems for our video and generated Javadocs for our project. 
+I was responsible for creating the Membership, Membership DAO, and Membership Services files. Tested the database 
+functionality in pgAdmin and tested the menu functionality. Revised the membership associated files with a 
+teammate. Ran through the menu systems for our video and generated Javadocs for our project. I completed the 
+Java documentation.
 
 The biggest challenge was understanding Maven and getting a handle on content not explicitly covered in class. 
 Sometimes we would realize things needed to be simplified, so we would have to review project requirements and focus on the main
