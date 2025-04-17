@@ -209,7 +209,13 @@ I was also responsible for setting up the Trainer Menu interface, making sure it
 
 Alexander Barry
 ============================================================================================================
+I was primarily responsible for designing and implementing the User superclass, along with its supporting classes: UserDAO and UserService. My contributions included developing the logic for user authentication, including password encryption and login functionality.
 
+As the command-line interface (CLI) began to take shape, I led the refactoring of our menu system into dedicated MenuHandler classes, which are coordinated through a switch statement in the main GymApp class. To enhance the user experience, I also added dynamic tables that populate at various stages of CLI operation.
+
+For testing and development purposes, I wrote the loadDefaultUsers function, which allowed the team to validate program features with preloaded data. Lastly, I contributed to the creation of our class diagram to support the final project documentation.
+
+The main challenge experienced in the completion of this project was setting up Maven for the project. It was a new and unfamiliar workflow for me and took some time.
 
 
 
