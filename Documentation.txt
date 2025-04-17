@@ -45,6 +45,61 @@ Once you have downloaded the files or cloned the repository to your local comput
 the necessary requirements above, to run the program type these commands into your IDE terminal: "mvn compile" 
 and then, "mvn exec:java -Dexec.mainClass="org.keyin.GymApp".
 
+Here the menu options include:
+1. Add a new user
+2. Login as a user
+3. Exit
+
+Enter your choice: {Here you input your choice of 1,2, or 3 }
+
+
+Choice 1. Add a new user
+============================================================================================================
+If you choose to add a new user you will be prompted to enter:
+- Username
+- Password
+- Phone Number
+- Address
+- Role {Choose between admin, trainer or member}
+
+Now upon completion you will have added your credentials to the database and you can login in the next choice.
+
+Choice 2. Login as a user
+============================================================================================================
+
+When you login, you will be prompted to enter your username and password.
+
+*Based on your role, you will have a different menu; admin, member, and trainer*
+
+Admin Menu
+============================================================================================================
+
+Here you have the options:
+1. View all users 
+2. Delete a user
+3. View all memberships and total expenses
+4. Exit
+
+Trainer Menu
+============================================================================================================
+
+Here you have the options:
+1. View assigned workout classes
+2. Create a new workout class
+3. Update an existing workout class
+4. Delete a workout class
+5. Purchase a gym membership
+6. Exit
+
+Member Menu
+============================================================================================================
+
+Here you have the options:
+1. View workout classes
+2. Purchase membership
+3. View total membership expenses
+4. Exit
+
 
 Classes 
 ============================================================================================================
