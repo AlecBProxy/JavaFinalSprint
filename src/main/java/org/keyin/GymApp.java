@@ -106,7 +106,7 @@ public class GymApp {
         String role = scanner.nextLine();
         
         // Print user details for debugging
-        System.out.println("Username: " + username);
+        System.out.println("\nUsername: " + username);
         System.out.println("Password: " + password);
         System.out.println("Email: " + email);
         System.out.println("Phone: " + phoneNumber);
