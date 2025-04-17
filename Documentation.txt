@@ -124,6 +124,12 @@ JAVAFINALSPRINT/
 ├── package-lock.json
 └── pom.xml
 
+Generated Javadocs
+============================================================================================================
+
+To open the Javadocs that have been generated, open the terminal and run this command into your IDE's
+terminal: "open target/reports/apidocs/index.html".
+
 
 Individual Reports
 ============================================================================================================
